@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LITTLE UNIVERSE</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+            min-height: 100vh;
+            background: #121418;
+            color: #d8d8dc;
+            padding: 40px 24px;
+            line-height: 1.7;
+        }
+        .container {
+            max-width: 620px;
+            margin: 0 auto;
+        }
+        .headline {
+            font-size: 28px;
+            color: #e6e6ec;
+            margin-bottom: 8px;
+        }
+        .sub-title {
+            color: #9498a0;
+            margin-bottom: 32px;
+        }
+        .info-card {
+            border: 1px solid #2c3038;
+            border-radius: 14px;
+            padding: 24px;
+            background-color: rgba(255,255,255,0.03);
+            margin-bottom: 24px;
+        }
+        .info-card p {
+            margin: 8px 0;
+        }
+        .tag-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 18px 0;
+        }
+        .tag {
+            font-size: 13px;
+            padding: 4px 10px;
+            border-radius: 999px;
+            background: #252931;
+            color: #b4b8c2;
+        }
+        .nav-group {
+            margin-top: 30px;
+        }
+        .nav-item {
+            display: block;
+            text-decoration: none;
+            color: #a8acb8;
+            padding: 12px 16px;
+            border: 1px solid #2c3038;
+            border-radius: 10px;
+            margin-bottom: 12px;
+            transition: 0.25s;
+        }
+        .nav-item:hover {
+            border-color: #545966;
+            color: #e6e6ec;
+            background: rgba(255,255,255,0.04);
+        }
+        .footer-note {
+            margin-top: 40px;
+            font-size: 13px;
+            color: #6c707a;
+        }
+
+        /* 顶部弹出消息提示栏 */
+        .toast {
+            position: fixed;
+            top: 24px;
+            left: 50%;
+            transform: translate(-50%, -200%);
+            background: #252931;
+            color: #e6e6ec;
+            padding: 10px 20px;
+            border-radius: 999px;
+            border:1px solid #444954;
+            transition: 0.5s ease;
+            z-index: 9999;
+        }
+        .toast.show {
+            transform: translate(-50%, 0);
+        }
+    </style>
+</head>
+<body>
+    <!-- 消息文字在这里改！！ -->
+    <div class="toast" id="msg">你最近过的样？</div>
+
+    <div class="container">
+        <h1 class="headline">LITTLE UNIVERSE</h1>
+        <div class="sub-title">a little universe, together</div>
+
+        <div class="info-card">
+            <p>记录时间：2026‑10‑12 22:10:55</p>
+            <p>配文：孤独因你而千变万化</p>
+            <div class="tag-group">
+                <span class="tag">土象金牛座</span>
+                <span class="tag">INTP T</span>
+                <span class="tag">十八岁</span>
+            </div>
+            <p>别名：宿弦</p>
+        </div>
+
+        <div class="nav-group">
+            <a class="nav-item" href="#">板评</a>
+            <a class="nav-item" href="#">话术</a>
+            <a class="nav-item" href="#">过往</a>
+            <a class="nav-item" href="#">须知</a>
+        </div>
+
+        <div class="footer-note">
+            Welcome to my little universe
+        </div>
+    </div>
+
+    <script>
+        // 打开页面自动弹出
+        const t = document.getElementById('msg');
+        window.onload = function(){
+            t.classList.add('show');
+            // 4秒后自动消失，数字4000=4秒，想久一点就改成6000
+            setTimeout(()=>{
+                t.classList.remove('show');
+            },4000)
+        }
+    </script>
+</body>
+</html>
