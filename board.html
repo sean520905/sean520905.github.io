@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+<meta http-equiv="Pragma" content="no-cache" />
+<meta http-equiv="Expires" content="0" />
+<title>LITTLE UNIVERSE</title>
+
+<script>
+  // 非首次进入（含从子页面返回）时，标记为跳过所有入场动画
+  if (sessionStorage.getItem("universe_visited")) {
+    document.documentElement.classList.add("skip-anim");
+  } else {
+    sessionStorage.setItem("universe_visited", "1");
+  }
+</script>
+
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  min-height: 100vh;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  color: #e8e8e6;
+  position: relative;
+  overflow-x: hidden;
+
+  background-image: url("images/bg.jpg");
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  transition: background-image 0.6s ease-in-out;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(10, 12, 24, 0.55), rgba(28, 29, 49, 0.45));
+  z-index: 0;
+  pointer-events: none;
+}
+
+@keyframes pageSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.profile-card {
+  position: relative;
+  z-index: 1;
+  margin: 70px 0 0 40px;
+  max-width: 420px;
+  background: rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 22px;
+  padding: 22px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  animation: pageSlideIn 1.2s ease-out;
+}
+
+.avatar {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid rgba(255, 255, 255, 0.25);
+  box-shadow: 0 0 18px rgba(255, 255, 255, 0.18);
+  position: absolute;
+  top: -32px;
+  left: 22px;
+  z-index: 3;
+  transition: all 0.4s ease;
+}
+
+.card-top {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding-left: 86px;
+  margin-bottom: 14px;
+}
+
+.name-title {
+  font-size: 24px;
+  letter-spacing: 2px;
+  color: #ffffff;
+  text-shadow: 0 0 14px rgba(255, 255, 255, 0.35);
+  margin-top: 4px;
+}
+
+.sub-title {
+  font-size: 14px;
+  color: #c2c2c0;
+  margin-bottom: 14px;
+}
+
+.info-lines {
+  display: inline-grid;
+  grid-template-columns: auto 1fr;
+  column-gap: 8px;
+  row-gap: 8px;
+  align-items: baseline;
+  margin: 4px 0;
+}
+
+.info-label {
+  font-size: 15px;
+  color: #a6a6a4;
+  text-align: right;
+  white-space: nowrap;
+}
+
+.info-value {
+  font-size: 15px;
+  color: #e6e6e4;
+  overflow: hidden;
+  white-space: nowrap;
+  width: fit-content;
+  border-right: 2px solid rgba(230, 230, 230, 0.4);
+}
+
+.realtime {
+  font-size: 13px;
+  color: #a6a6a4;
+  letter-spacing: 1px;
+  text-shadow: 0 0 6px rgba(240, 240, 240, 0.18);
+  white-space: nowrap;
+}
+
+.line-1 {
+  color: #ffffff;
+  text-shadow: 0 0 8px rgba(255, 255, 255, 0.3);
+}
+
+.line-2 {
+  animation: type 1.8s steps(12, end) 0.5s forwards, blink 0.7s infinite;
+  width: 0;
+}
+
+@keyframes type {
+  to {
+    width: 100%;
+  }
+}
+
+@keyframes blink {
+  0%, 100% {
+    border-color: rgba(230, 230, 230, 0.4);
+  }
+  50% {
+    border-color: transparent;
+  }
+}
+
+.tag-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 12px 0;
+  opacity: 0;
+  animation: fadeTag 0.4s ease-out 3s forwards;
+}
+
+@keyframes fadeTag {
+  to {
+    opacity: 1;
+  }
+}
+
+.tag {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 999px;
+  padding: 3px 10px;
+  font-size: 11.5px;
+  color: #c9c9c7;
+}
+
+.small-card {
+  position: relative;
+  z-index: 1;
+  margin: 22px 0 0 40px;
+  max-width: 420px;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 18px;
+  padding: 16px 18px;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.22), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  opacity: 0;
+  transform: translateY(12px);
+  animation: slideSmall 1s ease-out 3.6s forwards;
+}
+
+@keyframes slideSmall {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.small-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+}
+
+.small-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 13px 16px;
+  font-size: 14.5px;
+  color: #bfbfbe;
+  text-decoration: none;
+  background: rgba(255, 255, 255, 0.045);
+  border: 1px solid rgba(255, 255, 255, 0.13);
+  border-radius: 12px;
+  transition: all 0.24s ease;
+}
+
+.small-item::before {
+  content: "";
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: rgba(220, 220, 220, 0.5);
+  flex: 0 0 auto;
+}
+
+.small-item::after {
+  content: "›";
+  margin-left: auto;
+  font-size: 16px;
+  color: rgba(200, 200, 200, 0.5);
+  transition: all 0.24s ease;
+}
+
+.small-item:hover {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.26);
+  text-shadow: 0 0 6px rgba(240, 240, 240, 0.3);
+  transform: translateX(2px);
+}
+
+.small-item:hover::after {
+  color: #fff;
+  transform: translateX(2px);
+}
+
+.footer-text {
+  position: relative;
+  z-index: 1;
+  margin: 36px 0 40px 40px;
+  font-size: 13px;
+  color: #8f8f8d;
+  opacity: 0;
+  animation: fadeFooter 1s ease-out 4.6s forwards;
+}
+
+@keyframes fadeFooter {
+  to {
+    opacity: 1;
+  }
+}
+
+.ios-notify {
+  position: fixed;
+  top: 22px;
+  left: 50%;
+  transform: translateX(-50%) translateY(-90px);
+  width: min(360px, calc(100% - 32px));
+  z-index: 99999;
+  background: rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 18px;
+  padding: 14px 18px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+  transition: 0.4s cubic-bezier(0.2,0,0.2,1);
+  opacity: 0.2;
+}
+
+.ios-notify.show {
+  transform: translateX(-50%) translateY(0);
+  opacity: 1;
+}
+
+.notify-title {
+  font-size: 14px;
+  color: #ffffff;
+  font-weight: 500;
+  margin-bottom: 4px;
+}
+
+.notify-body {
+  font-size: 13px;
+  color: #c2c2c0;
+  line-height: 1.5;
+}
+
+/* 非首次进入：跳过所有入场动画，直接呈现最终状态 */
+.skip-anim .profile-card,
+.skip-anim .tag-wrap,
+.skip-anim .small-card,
+.skip-anim .footer-text,
+.skip-anim .line-1,
+.skip-anim .line-2,
+.skip-anim .realtime,
+.skip-anim .info-value {
+  animation: none !important;
+  opacity: 1 !important;
+  transform: none !important;
+  width: auto !important;
+}
+
+@media (max-width: 768px) {
+  .profile-card,
+  .small-card,
+  .footer-text {
+    margin-left: 20px;
+    margin-right: 20px;
+  }
+
+  .card-top {
+    padding-left: 80px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="ios-notify" id="notify">
+  <div class="notify-title">LITTLE UNIVERSE</div>
+  <div class="notify-body">你最近过得还好吗？</div>
+</div>
+
+<div class="profile-card">
+  <img class="avatar" id="avatarImg" src="images/avatar.jpg" alt="头像">
+
+  <div class="card-top">
+    <div class="realtime">2026-10-12 22:10:55</div>
+  </div>
+
+  <h1 class="name-title">宿弦</h1>
+  <p class="sub-title">little universe, together</p>
+
+  <div class="info-lines">
+    <span class="info-label">实时时间：</span>
+    <span class="info-value line-1"><span id="clock">2026-10-13 19:09:31</span></span>
+    <span class="info-label">配文：</span>
+    <span class="info-value line-2">孤独因你自己而千变万化</span>
+  </div>
+
+  <div class="tag-wrap">
+    <span class="tag">土象金牛座</span>
+    <span class="tag">INTP T</span>
+    <span class="tag">十八岁</span>
+  </div>
+</div>
+
+<div class="small-card">
+  <div class="small-grid">
+    <a class="small-item" href="notice.html">须知</a>
+    <a class="small-item" href="script.html">话术</a>
+    <a class="small-item" href="history.html">过往</a>
+    <a class="small-item" href="board.html">板评</a>
+  </div>
+</div>
+
+<p class="footer-text">Welcome to my little universe</p>
+
+<script>
+  function updateClock() {
+    const now = new Date();
+    const y = now.getFullYear();
+    const m = String(now.getMonth() + 1).padStart(2, "0");
+    const d = String(now.getDate()).padStart(2, "0");
+    const h = String(now.getHours()).padStart(2, "0");
+    const mi = String(now.getMinutes()).padStart(2, "0");
+    const s = String(now.getSeconds()).padStart(2, "0");
+    document.getElementById("clock").innerText = `${y}-${m}-${d} ${h}:${mi}:${s}`;
+  }
+
+  updateClock();
+  setInterval(updateClock, 1000);
+
+  const notify = document.getElementById("notify");
+
+  window.addEventListener("load", () => {
+    if (sessionStorage.getItem("universe_notified")) {
+      return;
+    }
+    sessionStorage.setItem("universe_notified", "1");
+
+    setTimeout(() => {
+      notify.classList.add("show");
+    }, 400);
+
+    setTimeout(() => {
+      notify.classList.remove("show");
+    }, 2500);
+  });
+</script>
+
+</body>
+</html>
