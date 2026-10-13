@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+<meta http-equiv="Pragma" content="no-cache" />
+<meta http-equiv="Expires" content="0" />
+<title>过往 · LITTLE UNIVERSE</title>
+
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  min-height: 100vh;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  color: #e8e8e6;
+  position: relative;
+  overflow-x: hidden;
+  background-color: #14161f;
+
+  background-image: linear-gradient(135deg, rgba(10, 12, 24, 0.55), rgba(28, 29, 49, 0.45)),
+    url("images/bg.jpg");
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+}
+
+.page {
+  position: relative;
+  z-index: 1;
+  max-width: 640px;
+  margin: 40px auto;
+  padding: 0 20px;
+}
+
+.back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 9px 16px;
+  font-size: 13.5px;
+  color: #c2c2c0;
+  text-decoration: none;
+  background: rgba(255, 255, 255, 0.055);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 12px;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  transition: all 0.24s ease;
+}
+
+.back-btn::before {
+  content: "‹";
+  font-size: 17px;
+  line-height: 1;
+}
+
+.back-btn:hover {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.26);
+  transform: translateX(-2px);
+}
+
+.content-card {
+  margin-top: 20px;
+  background: rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 22px;
+  padding: 28px 26px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+.page-title {
+  font-size: 26px;
+  letter-spacing: 3px;
+  color: #ffffff;
+  text-shadow: 0 0 14px rgba(255, 255, 255, 0.35);
+}
+
+.page-sub {
+  font-size: 13px;
+  color: #a6a6a4;
+  letter-spacing: 1px;
+  margin-top: 6px;
+  margin-bottom: 20px;
+  padding-bottom: 18px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.page-body {
+  font-size: 14.5px;
+  line-height: 1.9;
+  color: #d6d6d4;
+}
+
+.page-body p {
+  margin: 12px 0;
+}
+
+.page-body .placeholder {
+  color: #8f8f8d;
+  font-style: italic;
+}
+
+.footer-text {
+  margin-top: 26px;
+  font-size: 12.5px;
+  color: #8f8f8d;
+  text-align: center;
+}
+
+@media (max-width: 768px) {
+  .page {
+    margin: 24px auto;
+  }
+
+  .content-card {
+    padding: 22px 20px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="page">
+  <a class="back-btn" href="index.html">返回主页</a>
+
+  <div class="content-card">
+    <h1 class="page-title">过往</h1>
+    <p class="page-sub">HISTORY · ARCHIVE</p>
+
+    <div class="page-body">
+      <p class="placeholder">这里是「过往」的内容区域，等待填写。</p>
+      <p>可以在这里按时间记录过去的片段、事件、心情或重要节点。</p>
+    </div>
+  </div>
+
+  <p class="footer-text">Welcome to my little universe</p>
+</div>
+
+</body>
+</html>
