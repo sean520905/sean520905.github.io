@@ -43,6 +43,8 @@ body::before {
   position: fixed;
   inset: 0;
   background: linear-gradient(135deg, rgba(10, 12, 24, 0.55), rgba(28, 29, 49, 0.45));
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
   z-index: 0;
   pointer-events: none;
 }
@@ -70,7 +72,7 @@ body::before {
   border-radius: 22px;
   padding: 22px;
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.08);
-  animation: pageSlideIn 1.2s ease-out;
+  animation: pageSlideIn 0.9s ease-out;
 }
 
 .avatar {
@@ -87,7 +89,7 @@ body::before {
   transition: all 0.4s ease;
 }
 
-.card-top {i
+.card-top {
   display: flex;
   align-items: center;
   gap: 14px;
@@ -101,6 +103,12 @@ body::before {
   color: #ffffff;
   text-shadow: 0 0 14px rgba(255, 255, 255, 0.35);
   margin-top: 4px;
+}
+
+/* 微调「弦」字位置，修正字形重心偏高的视觉差 */
+.char-fix {
+  display: inline-block;
+  transform: translateY(0.5px);
 }
 
 .sub-title {
@@ -119,14 +127,14 @@ body::before {
 }
 
 .info-label {
-  font-size: 15px;
+  font-size: 13.5px;
   color: #a6a6a4;
   text-align: right;
   white-space: nowrap;
 }
 
 .info-value {
-  font-size: 15px;
+  font-size: 13.5px;
   color: #e6e6e4;
   overflow: hidden;
   white-space: nowrap;
@@ -142,14 +150,29 @@ body::before {
   white-space: nowrap;
 }
 
+/* IP 属地胶囊标签：与头像垂直居中 */
+.ip-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 10px;
+  font-size: 11px;
+  letter-spacing: 1px;
+  color: #c9c9c7;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 999px;
+  white-space: nowrap;
+}
+
 .line-1 {
   color: #ffffff;
   text-shadow: 0 0 8px rgba(255, 255, 255, 0.3);
 }
 
+/* 留言：直接显示 */
 .line-2 {
-  animation: type 1.8s steps(12, end) 0.5s forwards, blink 0.7s infinite;
-  width: 0;
+  border-right: none;
 }
 
 @keyframes type {
@@ -167,35 +190,11 @@ body::before {
   }
 }
 
-.tag-wrap {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin: 12px 0;
-  opacity: 0;
-  animation: fadeTag 0.4s ease-out 3s forwards;
-}
-
-@keyframes fadeTag {
-  to {
-    opacity: 1;
-  }
-}
-
-.tag {
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.14);
-  border-radius: 999px;
-  padding: 3px 10px;
-  font-size: 11.5px;
-  color: #c9c9c7;
-}
-
 .small-card {
   position: relative;
   z-index: 1;
-  margin: 22px 0 0 40px;
-  max-width: 420px;
+  margin: 30px 0 0 40px;
+  max-width: 378px;
   background: rgba(255, 255, 255, 0.05);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
@@ -205,7 +204,7 @@ body::before {
   box-shadow: 0 6px 24px rgba(0, 0, 0, 0.22), inset 0 1px 0 rgba(255, 255, 255, 0.06);
   opacity: 0;
   transform: translateY(12px);
-  animation: slideSmall 1s ease-out 3.6s forwards;
+  animation: slideSmall 0.7s ease-out 0.9s forwards;
 }
 
 @keyframes slideSmall {
@@ -235,19 +234,19 @@ body::before {
   transition: all 0.24s ease;
 }
 
-.small-item::before {
-  content: "";
-  width: 5px;
-  height: 5px;
-  border-radius: 50%;
-  background: rgba(220, 220, 220, 0.5);
-  flex: 0 0 auto;
+.small-item .en {
+  font-size: 10px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: rgba(200, 200, 200, 0.55);
+  margin-left: 10px;
+  transition: all 0.24s ease;
 }
 
 .small-item::after {
-  content: "›";
+  content: "→";
   margin-left: auto;
-  font-size: 16px;
+  font-size: 13px;
   color: rgba(200, 200, 200, 0.5);
   transition: all 0.24s ease;
 }
@@ -268,11 +267,29 @@ body::before {
 .footer-text {
   position: relative;
   z-index: 1;
-  margin: 36px 0 40px 40px;
-  font-size: 13px;
+  margin: 40px 0 40px 40px;
+  max-width: 420px;
+  text-align: center;
+  font-size: 12.5px;
   color: #8f8f8d;
   opacity: 0;
-  animation: fadeFooter 1s ease-out 4.6s forwards;
+  animation: fadeFooter 0.7s ease-out 1.7s forwards;
+}
+
+.footer-text::before {
+  content: "· · ·";
+  display: block;
+  letter-spacing: 6px;
+  margin-bottom: 8px;
+  color: rgba(200, 200, 200, 0.35);
+}
+
+.footer-text::after {
+  content: "—— end ——";
+  display: block;
+  margin-top: 8px;
+  letter-spacing: 2px;
+  color: rgba(200, 200, 200, 0.4);
 }
 
 @keyframes fadeFooter {
@@ -319,7 +336,6 @@ body::before {
 
 /* 非首次进入：跳过所有入场动画，直接呈现最终状态 */
 .skip-anim .profile-card,
-.skip-anim .tag-wrap,
 .skip-anim .small-card,
 .skip-anim .footer-text,
 .skip-anim .line-1,
@@ -358,32 +374,26 @@ body::before {
   <img class="avatar" id="avatarImg" src="images/avatar.jpg" alt="头像">
 
   <div class="card-top">
-    <div class="realtime">2026-10-12 22:10:55</div>
+    <span class="ip-tag">IP：雾山影</span>
   </div>
 
-  <h1 class="name-title">宿弦</h1>
+  <h1 class="name-title">宿<span class="char-fix">弦</span></h1>
   <p class="sub-title">little universe, together</p>
 
   <div class="info-lines">
     <span class="info-label">实时时间：</span>
     <span class="info-value line-1"><span id="clock">2026-10-13 19:09:31</span></span>
-    <span class="info-label">配文：</span>
+    <span class="info-label">留言：</span>
     <span class="info-value line-2">孤独因你自己而千变万化</span>
-  </div>
-
-  <div class="tag-wrap">
-    <span class="tag">土象金牛座</span>
-    <span class="tag">INTP T</span>
-    <span class="tag">十八岁</span>
   </div>
 </div>
 
 <div class="small-card">
   <div class="small-grid">
-    <a class="small-item" href="notice.html">须知</a>
-    <a class="small-item" href="script.html">话术</a>
-    <a class="small-item" href="history.html">过往</a>
-    <a class="small-item" href="board.html">板评</a>
+    <a class="small-item" href="notice.html"><span class="cn">须知</span><span class="en">Notice</span></a>
+    <a class="small-item" href="script.html"><span class="cn">话术</span><span class="en">Script</span></a>
+    <a class="small-item" href="history.html"><span class="cn">过往</span><span class="en">History</span></a>
+    <a class="small-item" href="board.html"><span class="cn">板评</span><span class="en">Board</span></a>
   </div>
 </div>
 
@@ -424,3 +434,4 @@ body::before {
 
 </body>
 </html>
+
