@@ -94,9 +94,8 @@ body::before {
 
 .card-top {
   display: flex;
-  align-items: center;
-  height: 36px;
-  margin-top: -17px;
+  align-items: flex-start;
+  margin-top: -13px;
   padding-left: 112px;
   margin-bottom: 8px;
 }
@@ -105,18 +104,27 @@ body::before {
 .top-lines {
   display: flex;
   flex-direction: column;
-  gap: 0;
-  line-height: 1.2;
-  letter-spacing: 0.5px;
+  gap: 3px;
+  line-height: 1.1;
+  margin-top: -4px;
 }
 
-/* 两行之间的浅色小横线 */
-.tl-divider {
-  height: 1px;
-  width: 100%;
-  margin: 4px 0;
-  background: linear-gradient(90deg, rgba(255,255,255,0.05), rgba(255,255,255,0.35), rgba(255,255,255,0.05));
-  border-radius: 1px;
+/* 小号玻璃胶囊：FR 行 / 天气行 */
+.tl-ip,
+.tl-weather {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  align-self: flex-start;
+  padding: 1.5px 8px;
+  font-size: 10px;
+  letter-spacing: 0.5px;
+  color: #cfcfcd;
+  background: rgba(255, 255, 255, 0.10);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 999px;
+  white-space: nowrap;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.22);
 }
 
 .tl-ip {
@@ -128,9 +136,9 @@ body::before {
 /* IP / FR 前缀：等宽字体 + 固定宽度，两行前缀与冒号严格上下对齐 */
 .mono-tag {
   display: inline-block;
-  width: 2.6em;
+  width: 1.5em;
   font-family: "SF Mono", Menlo, Consolas, "Courier New", monospace;
-  font-size: 11px;
+  font-size: 10px;
   letter-spacing: 0;
   vertical-align: baseline;
 }
@@ -424,12 +432,12 @@ body::before {
 /* 晴：右上角淡阳光光晕 + 漂浮光尘 */
 .sun-glow {
   position: absolute;
-  top: -120px;
-  right: -80px;
-  width: 340px;
-  height: 340px;
+  top: -90px;
+  right: -60px;
+  width: 280px;
+  height: 280px;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(255,250,235,0.20) 0%, rgba(255,250,235,0.06) 45%, rgba(255,250,235,0) 70%);
+  background: radial-gradient(circle, rgba(255,253,245,0.25) 0%, rgba(255,252,240,0.12) 40%, rgba(255,252,240,0) 70%);
   animation: sunPulse 6s ease-in-out infinite alternate;
 }
 
@@ -501,7 +509,6 @@ body::before {
   <div class="card-top">
     <div class="top-lines">
       <span class="tl-ip"><span class="mono-tag">FR</span>：雾山影</span>
-      <span class="tl-divider"></span>
       <span class="tl-weather"><span class="mono-tag">IP</span>：<span id="wCityShort">哈尔滨</span> <span id="wText">…</span></span>
     </div>
   </div>
